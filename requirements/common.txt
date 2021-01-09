@@ -1,0 +1,6 @@
+openpyxl
+pandas
+PySide2
+PySimpleGUIQt
+sweetviz
+tornado
