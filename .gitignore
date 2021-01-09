@@ -3,3 +3,7 @@
 .prod/
 .vscode/
 SWEETVIZ_REPORT.html
+__pycache__/
+build/
+dist/
+*.spec

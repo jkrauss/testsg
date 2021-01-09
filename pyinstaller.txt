@@ -1,0 +1,6 @@
+# prod:
+pyinstaller --onefile --paths C:\Users\krauss.TRAVEL\dev\testsg\.venv\Lib\site-packages --hidden-import scipy.spatial.transform._rotation_groups --add-data ".venv\Lib\site-packages\sweetviz;sweetviz" --windowed test.py
+
+# debug:
+pyinstaller --onedir --paths C:\Users\krauss.TRAVEL\dev\testsg\.venv\Lib\site-packages --debug all --hidden-import scipy.spatial.transform._rotation_groups --add-data ".venv\Lib\site-packages\sweetviz;sweetviz" test.py
+
