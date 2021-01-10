@@ -12,21 +12,21 @@
 
 import json
 import os.path
+import pandas as pd
+import os
 
 
-# INITIALIZE THE MODULE: undo and redo stack, STOREFILE and store
-undo = []
-redo = []
-STORE_FILE = 'ml4all_store.json'
+# INITIALIZE THE MODULE: STOREFILE and store
+_STORE_FILE = os.path.join(os.getcwd(), 'ml4all_store.json')
 
 
-def save_store():
-    with open(STORE_FILE, 'w') as out:
+def _save_store():
+    with open(_STORE_FILE, 'w') as out:
         json.dump(store, out)
 
 
-def read_store():
-    if os.path.isfile(STORE_FILE):
+def _read_store():
+    if os.path.isfile(_STORE_FILE):
         with open('ml4all_store.json') as f:
             store = json.load(f)
     else:
@@ -34,8 +34,8 @@ def read_store():
     return store
 
 
-store = read_store()
-save_store()
+store = _read_store()
+_save_store()
 
 
 class Project:
@@ -47,16 +47,20 @@ class Project:
             self.output = store['name']['output']
             self.models = store['name']['models']
             self.version = store['name']['version']
+            self.undo = store['name']['redo']
+            self.redo = store['name']['redo']
         else:
             self.input = {}
             self.output = {}
             self.models = {}
             self.version = 0
-            self.save(self, increase_version=False)
+            self.undo = []
+            self.redo = []
+            self.save(increase_version=False)
 
     def __del__(self):
         del store[self.name]
-        save_store()
+        _save_store()
 
     def save(self, increase_version=True):
         if increase_version:
@@ -66,15 +70,10 @@ class Project:
             'output': self.output,
             'models': self.models,
             'version': self.version,
+            'undo': self.undo,
+            'redo': self.redo,
         }
-        save_store()
-
-
-class Command:
-    def __init__(self, command, undo):
-        super(self).__init__(self)
-        self.command = command
-        self.undo = undo
+        _save_store()
 
 
 if __name__ == "__main__":
