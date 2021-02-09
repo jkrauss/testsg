@@ -44,4 +44,5 @@ while True:
     elif event == 'OK':
         on_ok()
 
+print(window.QTApplication)
 window.close()
